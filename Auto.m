@@ -1,9 +1,14 @@
-brick = ConnectBrick('Bart');
+%brick = ConnectBrick('Bart');
+%DisconnectBrick(brick);
 brick.SetColorMode(1, 2);
 
 % Speeds for forward/backward movement
-rightSpe = 44.3;
-leftSpe = 50;
+rightSpe = 45;
+leftSpe = 51;
+
+%boolean value
+debounce = 0;
+
 
 % Used to prevent the ultrasonic sensor from turning us in circles
 ultrasonicPause = 0;
@@ -18,6 +23,7 @@ while 1
     touchSensorPressed = brick.TouchPressed(2);
     if ultrasonicPause > 0
         ultrasonicPause = ultrasonicPause - 1;
+        pause(1);
     end
 
     switch color
@@ -27,12 +33,14 @@ while 1
                 pause(0.25);
             end
             brick.StopMotor('CB', 'Brake');
-            %KeyboardControls();
-            ultrasonicPause = 9;
-        % Red
+            MotorPickUp();
+            rightSpe = 45;
+            leftSpe = 51;
+            % uncomment later ultrasonicPause = 9;
+            % Red
         case 5
             brick.StopMotor('CB', 'Brake');
-            pause(1);
+            pause(2);
             brick.MoveMotor('C', rightSpe);
             brick.MoveMotor('B', leftSpe);
             pause(0.5);
@@ -51,7 +59,7 @@ while 1
             angle = brick.GyroAngle(3);
         end
         brick.StopMotor('CB', 'Brake');
-        ultrasonicPause = 9;
+        ultrasonicPause = 4;
     elseif touchSensorPressed
         brick.StopMotor('CB', 'Brake');
         % Move away from wall
@@ -73,4 +81,3 @@ while 1
     end
 end
 
-DisconnectBrick(brick);

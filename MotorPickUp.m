@@ -1,6 +1,6 @@
 rightSpe = 50;
 leftSpe = 50;
-pickupSpe = 1;
+pickupSpe = 15;
 
 global key
 InitKeyboard();
