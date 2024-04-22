@@ -3,12 +3,8 @@
 brick.SetColorMode(1, 2);
 
 % Speeds for forward/backward movement
-rightSpe = 45;
+rightSpe = 46.8;
 leftSpe = 51;
-
-%boolean value
-debounce = 0;
-
 
 % Used to prevent the ultrasonic sensor from turning us in circles
 ultrasonicPause = 0;
@@ -21,33 +17,64 @@ while 1
     color = brick.ColorCode(1);
     distance = brick.UltrasonicDist(4);
     touchSensorPressed = brick.TouchPressed(2);
-    if ultrasonicPause > 0
-        ultrasonicPause = ultrasonicPause - 1;
-        pause(1);
-    end
+  %  if ultrasonicPause > 0
+  %      ultrasonicPause = ultrasonicPause - 1;
+  %      pause(1);
+ %   end
 
     switch color
-        % Blue, Green, Yellow
-        case {2, 3, 4}
+        % Blue
+        case {2, 3}
+            if color == 2
+                pause(1);
+                brick.beep()
+                pause(.5);
+                brick.beep()
+                pause(1);
+            end
             if color == 3
-                pause(0.25);
+                pause(1);
+                brick.beep()
+                pause(.5);
+                brick.beep()
+                pause(.5);
+                brick.beep()
+                pause(1);
             end
             brick.StopMotor('CB', 'Brake');
             MotorPickUp();
-            rightSpe = 45;
+            rightSpe = 46.4;
             leftSpe = 51;
+        %Green
+        %case 3
+            %if color == 3
+             %   pause(0.25);
+            %end
+            %brick.StopMotor('CB', 'Brake');
+            %pause(1);
+            %brick.beep()
+            %pause(.5);
+            %brick.beep()
+            %pause(.5);
+            %brick.beep()
+            %pause(1);
+            %MotorPickUp();
+            %rightSpe = 46.4;
+            %leftSpe = 51;
             % uncomment later ultrasonicPause = 9;
-            % Red
+        % Red
         case 5
             brick.StopMotor('CB', 'Brake');
-            pause(2);
+            pause(1);
             brick.MoveMotor('C', rightSpe);
             brick.MoveMotor('B', leftSpe);
             pause(0.5);
+        case 4
+            MotorPickUp();
     end
 
     % No wall detected, turn towards ultrasonic sensor
-    if distance > 55 && ultrasonicPause == 0
+    if distance > 55
         pause(0.75);
         brick.StopMotor('CB', 'Brake');
         % Turn left
@@ -59,12 +86,14 @@ while 1
             angle = brick.GyroAngle(3);
         end
         brick.StopMotor('CB', 'Brake');
-        ultrasonicPause = 4;
+        brick.MoveMotor('C', rightSpe);
+        brick.MoveMotor('B', leftSpe);
+        pause(2);
     elseif touchSensorPressed
         brick.StopMotor('CB', 'Brake');
         % Move away from wall
-        brick.MoveMotorAngleRel('C', -rightSpe, 325, 'Brake');
-        brick.MoveMotorAngleRel('B', -leftSpe, 325, 'Brake');
+        brick.MoveMotorAngleRel('B', -rightSpe, 325, 'Brake');
+        brick.MoveMotorAngleRel('C', -leftSpe, 325, 'Brake');
         brick.WaitForMotor('CB');
         % Turn right
         brick.GyroCalibrate(3);
