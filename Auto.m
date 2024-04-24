@@ -3,7 +3,7 @@
 brick.SetColorMode(1, 2);
 
 % Speeds for forward/backward movement
-rightSpe = 46.8;
+rightSpe = 53.27;
 leftSpe = 51;
 
 % Used to prevent the ultrasonic sensor from turning us in circles
@@ -24,44 +24,14 @@ while 1
 
     switch color
         % Blue
-        case {2, 3}
-            if color == 2
-                pause(1);
-                brick.beep()
-                pause(.5);
-                brick.beep()
-                pause(1);
-            end
+        case {2, 3, 4}
             if color == 3
-                pause(1);
-                brick.beep()
-                pause(.5);
-                brick.beep()
-                pause(.5);
-                brick.beep()
-                pause(1);
+                pause(0.25);
             end
             brick.StopMotor('CB', 'Brake');
             MotorPickUp();
-            rightSpe = 46.4;
+            rightSpe = 53.27;
             leftSpe = 51;
-        %Green
-        %case 3
-            %if color == 3
-             %   pause(0.25);
-            %end
-            %brick.StopMotor('CB', 'Brake');
-            %pause(1);
-            %brick.beep()
-            %pause(.5);
-            %brick.beep()
-            %pause(.5);
-            %brick.beep()
-            %pause(1);
-            %MotorPickUp();
-            %rightSpe = 46.4;
-            %leftSpe = 51;
-            % uncomment later ultrasonicPause = 9;
         % Red
         case 5
             brick.StopMotor('CB', 'Brake');
@@ -69,8 +39,6 @@ while 1
             brick.MoveMotor('C', rightSpe);
             brick.MoveMotor('B', leftSpe);
             pause(0.5);
-        case 4
-            MotorPickUp();
     end
 
     % No wall detected, turn towards ultrasonic sensor
@@ -88,7 +56,8 @@ while 1
         brick.StopMotor('CB', 'Brake');
         brick.MoveMotor('C', rightSpe);
         brick.MoveMotor('B', leftSpe);
-        pause(2);
+        pause(2.5);
+        
     elseif touchSensorPressed
         brick.StopMotor('CB', 'Brake');
         % Move away from wall

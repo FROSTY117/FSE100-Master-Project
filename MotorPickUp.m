@@ -1,5 +1,5 @@
-rightSpe = 50;
-leftSpe = 50;
+rightSpe = 46.4;
+leftSpe = 51;
 pickupSpe = 15;
 
 global key
@@ -44,6 +44,7 @@ while 1
             brick.StopMotor('C')
             brick.StopMotor('B')
         case 'q'
+            brick.StopMotor('A')
             break;
     end
 end
