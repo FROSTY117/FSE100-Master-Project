@@ -17,10 +17,6 @@ while 1
     color = brick.ColorCode(1);
     distance = brick.UltrasonicDist(4);
     touchSensorPressed = brick.TouchPressed(2);
-  %  if ultrasonicPause > 0
-  %      ultrasonicPause = ultrasonicPause - 1;
-  %      pause(1);
- %   end
 
     switch color
         % Blue
